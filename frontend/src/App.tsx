@@ -17,6 +17,7 @@ import SubscriptionPlans from './pages/subscription/SubscriptionPlans';
 import MySubscriptions from './pages/subscription/MySubscriptions';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import PlansPage from './pages/subscription/PlansPage';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -71,6 +72,9 @@ const App: React.FC = () => {
       
       {/* Rota 404 */}
       <Route path="*" element={<NotFound />} />
+      
+      {/* Nova rota para a página de planos */}
+      <Route path="plans" element={<PlansPage />} />
     </Routes>
   );
 };

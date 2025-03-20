@@ -18,6 +18,9 @@ RUN npm install --legacy-peer-deps
 # Instalar ajv manualmente
 RUN npm install ajv@6.12.6 ajv-keywords@3.5.2
 
+# Instalar styled-components e framer-motion
+RUN npm install --save styled-components framer-motion @types/styled-components
+
 # Copiar o código do projeto
 COPY . .
 

@@ -9,6 +9,7 @@ import './index.css';
 import App from './App';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
+import GlobalStyles from './styles/GlobalStyles';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,6 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <GlobalStyles />
       <BrowserRouter>
         <App />
         <ToastContainer position="top-right" autoClose={3000} />
