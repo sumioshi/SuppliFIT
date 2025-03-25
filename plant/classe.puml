@@ -1,0 +1,111 @@
+@startuml
+title Diagrama de Classes - App de Suplementação e Gamificação
+
+' Classe base para Usuário
+abstract class Usuario {
+  - id: int
+  - nome: String
+  - email: String
+  - senha: String
+  + login(): boolean
+  + logout(): void
+}
+
+' Cliente herda de Usuário
+class Cliente extends Usuario {
+  - endereco: String
+  - historicoCompras: List<Pedido>
+  + fazerPedido(): Pedido
+}
+
+' Administrador herda de Usuário
+class Administrador extends Usuario {
+  + gerenciarEstoque(): void
+  + gerenciarPedidos(): void
+}
+
+' Classe Pedido
+class Pedido {
+  - id: int
+  - data: Date
+  - status: String
+  - valorTotal: double
+  + confirmarPagamento(): boolean
+  + cancelar(): void
+}
+
+' Classe Caixa, que representa a caixa surpresa
+class Caixa {
+  - id: int
+  - tipo: String
+  - conteudo: List<Item>
+  + gerarConteudo(): void
+}
+
+' Classe genérica para itens que compõem a caixa
+class Item {
+  - id: int
+  - nome: String
+  - descricao: String
+  - categoria: String
+}
+
+' Especializações de Item
+class Suplemento extends Item {
+  - sabor: String
+}
+
+class Brinde extends Item {
+}
+
+class ItemAcademia extends Item {
+}
+
+' Classe para Assinaturas (caso seja adotado esse modelo)
+class Assinatura {
+  - id: int
+  - tipo: String
+  - dataInicio: Date
+  - dataFim: Date
+  + renovar(): void
+  + cancelar(): void
+}
+
+' Classe para o sistema de Gamificação
+class Gamificacao {
+  - pontos: int
+  - nivel: int
+  - equipamentosDesbloqueados: List<Equipamento>
+  + acumularPontos(qtd: int): void
+  + desbloquearEquipamento(equip: Equipamento): void
+}
+
+' Classe para os equipamentos da academia ilustrativa
+class Equipamento {
+  - id: int
+  - nome: String
+  - descricao: String
+}
+
+' Classe para representar o sistema de entrega
+class Delivery {
+  - id: int
+  - statusEntrega: String
+  + rastrearEntrega(): String
+}
+
+' Relacionamentos
+
+Cliente "1" -- "0..*" Pedido : realiza >
+Pedido "1" -- "1" Caixa : contém >
+Pedido "0..1" -- "1" Assinatura : pode ser >
+Pedido "0..1" -- "1" Delivery : acompanha >
+Caixa "1" -- "0..*" Item : compõe >
+Cliente "1" -- "1" Gamificacao : participa >
+Gamificacao "1" -- "0..*" Equipamento : desbloqueia >
+
+Administrador "1" --> "0..*" Pedido : gerencia
+Administrador "1" --> "0..*" Caixa : administra
+Administrador "1" --> "0..*" Item : gerencia
+
+@enduml
