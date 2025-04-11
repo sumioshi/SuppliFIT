@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: supplifit_backend
+    restart: always
+    volumes:
+      - ./backend:/app
+      - backend_static:/app/staticfiles
+      - backend_media:/app/mediafiles
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./backend/.env
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn supplifit.wsgi:application --bind 0.0.0.0:8000 --reload"
+    networks:
+      - supplifit_network
+
+  frontend:
+    build: ./frontend
+    container_name: supplifit_frontend
+    restart: always
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    command: npm start
+    networks:
+      - supplifit_network
+
+  db:
+    image: postgres:15-alpine
+    container_name: supplifit_db
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=supplifit
+    ports:
+      - "5432:5432"
+    networks:
+      - supplifit_network
+
+volumes:
+  postgres_data:
+  backend_static:
+  backend_media:
+
+networks:
+  supplifit_network:
+    driver: bridge 
