@@ -11,12 +11,10 @@ class User(AbstractUser):
     """
     
     CUSTOMER = 'customer'
-    PARTNER = 'partner'
     ADMIN = 'admin'
     
     USER_TYPES = [
         (CUSTOMER, 'Cliente'),
-        (PARTNER, 'Lojista Parceiro'),
         (ADMIN, 'Administrador'),
     ]
     

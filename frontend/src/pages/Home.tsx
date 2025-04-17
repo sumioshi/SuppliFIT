@@ -46,9 +46,7 @@ const Home: React.FC = () => {
               <Card.Text>
                 Encontre lojas parceiras próximas a você.
               </Card.Text>
-              <Button variant="primary" href="/partners">
-                Localizar
-              </Button>
+      
             </Card.Body>
           </Card>
         </Col>

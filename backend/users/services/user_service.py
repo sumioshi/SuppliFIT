@@ -96,16 +96,3 @@ class UserService:
             user_type=User.CUSTOMER,
             is_active=True
         )
-    
-    @staticmethod
-    def get_active_partners():
-        """
-        Retorna todos os lojistas parceiros ativos.
-        
-        Returns:
-            QuerySet: QuerySet de lojistas ativos.
-        """
-        return User.objects.filter(
-            user_type=User.PARTNER,
-            is_active=True
-        ) 

@@ -55,29 +55,3 @@ class UserProfileFactory(factory.django.DjangoModelFactory):
         'Saúde geral'
     ])
 
-
-class PartnerUserFactory(UserFactory):
-    """
-    Factory para criação de usuários do tipo lojista.
-    """
-    
-    user_type = User.PARTNER
-    
-    @factory.post_generation
-    def profile(self, create, extracted, **kwargs):
-        """
-        Cria um perfil de lojista para o usuário.
-        """
-        if not create:
-            return
-            
-        UserProfileFactory(
-            user=self,
-            height=None,
-            weight=None,
-            fitness_goal=None,
-            company_name=Faker('company', locale='pt_BR').generate({}),
-            cnpj=Faker('cnpj').generate({}),
-            store_address=Faker('address', locale='pt_BR').generate({}),
-            **kwargs
-        ) 
