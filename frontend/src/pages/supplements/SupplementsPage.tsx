@@ -29,12 +29,12 @@ const SupplementsPage: React.FC = () => {
   
   // Buscar suplementos iniciais
   useEffect(() => {
-    dispatch(fetchSupplements({ available: true }));
+    dispatch(fetchSupplements({ filters: { available: true }, rejectWithValue: (error: any) => error }));
   }, [dispatch]);
   
   // Manipulador de mudança de filtros
   const handleFilterChange = useCallback((filters: FiltersType) => {
-    dispatch(fetchSupplements(filters));
+    dispatch(fetchSupplements({ filters, rejectWithValue: (error: any) => error }));
     dispatch(setCurrentPage(1));
   }, [dispatch]);
   

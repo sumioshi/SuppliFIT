@@ -40,8 +40,7 @@ INSTALLED_APPS = [
     'subscription_plans',
     'supplements.apps.SupplementsConfig',
     'partner_stores',
-    'orders',
-    'recommendations',
+    'supplifit'
 ]
 
 MIDDLEWARE = [
@@ -87,7 +86,7 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'db'),
         'PORT': os.getenv('DB_PORT', '5432'),
         'OPTIONS': {
-            'sslmode': 'require',  # Necessário para PostgreSQL no Azure
+            'sslmode': 'disable',  # Desabilitando SSL para desenvolvimento local
         },
     }
 }

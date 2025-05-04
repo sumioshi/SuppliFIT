@@ -97,13 +97,9 @@ const SelectButton = styled(motion.button)`
 `;
 
 const PlanCard: React.FC<PlanCardProps> = ({ title, price, features, isPopular, onSelect }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <Card
       isPopular={isPopular}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.02 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}

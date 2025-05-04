@@ -27,5 +27,8 @@ COPY . .
 # Expor a porta
 EXPOSE 3000
 
+# Desabilitar ESLint
+ENV DISABLE_ESLINT_PLUGIN=true
+
 # Comando para iniciar o servidor de desenvolvimento
 CMD ["npm", "start"] 

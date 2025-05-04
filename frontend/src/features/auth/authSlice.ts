@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { jwtDecode } from 'jwt-decode';
 import api from '../../services/api';
 
 // Interfaces
@@ -52,7 +51,7 @@ export const checkAuth = createAsyncThunk(
       }
       
       // Verificar se o token é válido
-      const response = await api.post('/api/token/verify/', { token });
+      await api.post('/api/token/verify/', { token });
       
       // Obter dados do usuário
       const userData = await api.get<User>('/api/v1/users/users/me/');

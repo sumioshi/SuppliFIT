@@ -30,7 +30,7 @@ const initialState: SupplementsState = {
 // Actions assíncronas
 export const fetchSupplements = createAsyncThunk(
   'supplements/fetchSupplements',
-  async (filters?: SupplementFilters, { rejectWithValue }) => {
+  async ({ filters, rejectWithValue }: { filters?: SupplementFilters, rejectWithValue: any }) => {
     try {
       const response = await supplementsService.getSupplements(filters);
       return response;

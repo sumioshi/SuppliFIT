@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { login } from '../../features/auth/authSlice';
 import { RootState } from '../../store';
 import { useAppDispatch } from '../../app/hooks';
@@ -13,7 +12,6 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useLocalDispatch();
-  const navigate = useNavigate();
   const { error, loading } = useSelector((state: RootState) => state.auth);
 
   const handleSubmit = (e: React.FormEvent) => {

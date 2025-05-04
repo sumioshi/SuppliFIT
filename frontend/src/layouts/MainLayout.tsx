@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
-import { RootState, AppDispatch } from '../store';
+import { RootState } from '../store';
 import { useAppDispatch } from '../app/hooks';
 
 // Hook customizado simples
@@ -12,7 +12,7 @@ const useLocalDispatch = () => useAppDispatch();
 const MainLayout: React.FC = () => {
   // Usando o dispatch tipado corretamente
   const dispatch = useLocalDispatch();
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const handleLogout = () => {
     // Usando o dispatch como uma função normal

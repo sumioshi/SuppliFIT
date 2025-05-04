@@ -33,6 +33,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    environment:
+      - DISABLE_ESLINT_PLUGIN=true
     command: npm start
     networks:
       - supplifit_network
