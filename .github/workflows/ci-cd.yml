@@ -1,3 +1,16 @@
+# Este arquivo define o pipeline de CI/CD para o projeto SuppliFIT.
+# Ele é dividido em dois jobs principais: build-and-test e deploy.
+
+# O job 'build-and-test' realiza as seguintes tarefas:
+# - Configura os serviços necessários, como o banco de dados PostgreSQL.
+# - Instala dependências do backend e frontend.
+# - Executa testes automatizados para garantir a qualidade do código.
+
+# O job 'deploy' realiza as seguintes tarefas:
+# - Faz login no Docker Hub para publicar imagens Docker.
+# - Constrói e publica as imagens Docker do backend e frontend.
+# - Implanta os serviços localmente usando o Docker Compose.
+
 name: CI/CD Pipeline
 
 on:
@@ -85,14 +98,8 @@ jobs:
           docker-compose -f docker-compose.yml build
           docker-compose -f docker-compose.yml push
 
-      # Implantar no servidor (exemplo com SSH)
-      - name: Deploy to server
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /path/to/project
-            docker-compose pull
-            docker-compose up -d
+      # Implantar no ambiente local
+      - name: Deploy locally
+        run: |
+          docker-compose pull
+          docker-compose up -d
