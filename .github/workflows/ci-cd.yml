@@ -48,6 +48,7 @@ jobs:
 
       # Instalar dependências do backend
       - name: Install backend dependencies
+        working-directory: backend
         run: |
           python -m pip install --upgrade pip
           pip install poetry
