@@ -56,7 +56,9 @@ jobs:
 
       # Executar testes do backend
       - name: Run backend tests
+        working-directory: backend
         run: |
+          source $(poetry env info --path)/bin/activate
           python manage.py test
 
       # Configurar Node.js para o frontend
