@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend:
     build: ./backend
@@ -23,19 +21,19 @@ services:
       - supplifit_network
 
   frontend:
-    build: ./frontend
+    build: ./supplifit-dark-design
     container_name: supplifit_frontend
     restart: always
     volumes:
-      - ./frontend:/app
+      - ./supplifit-dark-design:/app
       - /app/node_modules
     ports:
-      - "3000:3000"
+      - "5173:5173"
     depends_on:
       - backend
     environment:
-      - DISABLE_ESLINT_PLUGIN=true
-    command: npm start
+      - VITE_API_URL=http://localhost:8000
+    command: npm run dev
     networks:
       - supplifit_network
 
