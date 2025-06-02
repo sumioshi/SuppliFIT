@@ -10,15 +10,21 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     env_file:
       - ./backend/.env
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
-             gunicorn supplifit.wsgi:application --bind 0.0.0.0:8000 --reload"
+             gunicorn supplifit.wsgi:application --bind 0.0.0.0:8000 --workers 2 --threads 2 --timeout 120 --keep-alive 5 --log-level info"
     networks:
       - supplifit_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   frontend:
     build: ./supplifit-dark-design
@@ -30,12 +36,21 @@ services:
     ports:
       - "5173:5173"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       - VITE_API_URL=http://localhost:8000
-    command: npm run dev
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=5173
+    command: npm run dev -- --host 0.0.0.0
     networks:
       - supplifit_network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:5173"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   db:
     image: postgres:15-alpine
@@ -51,6 +66,11 @@ services:
       - "5432:5432"
     networks:
       - supplifit_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:
