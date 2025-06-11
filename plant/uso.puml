@@ -1,52 +1,80 @@
 @startuml
+
 title Diagrama de Caso de Uso - App de Suplementação e Gamificação
 
-' Definição dos Atores
-actor "Cliente" as Cliente
-actor "Administrador" as Admin
-actor "Sistema de Delivery" as Delivery
-
-' Casos de Uso do Sistema
-rectangle "Sistema de Suplementação e Gamificação" {
-  (Cadastrar/Login) as UC1
-  (Escolher Modalidade de Compra) as UC2
-  (Configurar Pedido) as UC3
-  (Processar Pagamento e Gerenciar Estoque) as UC4
-  (Acompanhar Entrega) as UC5
-  (Avaliar Pedido e Acumular Pontos) as UC6
-  (Desbloquear Equipamento na Academia) as UC7
-  (Participar de Desafios e Ranking) as UC8
-  (Compartilhar Conquistas) as UC9
+' Configurações de estilo
+skinparam usecase {
+  Width 260
+  Height 60
+  FontSize 14
+}
+skinparam package {
+  BackgroundColor #EFEFEF
+  BorderColor #333333
+  FontSize 16
 }
 
-' Associação de Atores aos Casos de Uso
+' Fluxo horizontal para melhor visualização
+left to right direction
+
+' Atores
+actor "Cliente" as Cliente
+actor "Sistema de Delivery" as Delivery
+actor "Administrador" as Admin
+
+' Grupos de casos de uso em colunas
+
+package "Autenticação" {
+  (Cadastrar / Login) as UC1
+}
+
+package "Compras" {
+  (Escolher Modalidade de Compra) as UC2
+  (Configurar Pedido) as UC3
+  (Processar Pagamento) as UC4
+  (Gerenciar Estoque) as UC5
+  (Acompanhar Entrega) as UC6
+}
+
+package "Gamificação" {
+  (Avaliar Pedido) as UC7
+  (Acumular Pontos) as UC8
+  (Desbloquear Equipamento na Academia) as UC9
+  (Participar de Desafios e Ranking) as UC10
+  (Compartilhar Conquistas) as UC11
+}
+
+package "Administração" {
+  (Gerenciar Estoque e Produtos) as UC12
+  (Gerenciar Pedidos) as UC13
+  (Gerenciar Campanhas) as UC14
+}
+
+' Ligações de atores aos casos de uso
 Cliente --> UC1
 Cliente --> UC2
 Cliente --> UC3
-Cliente --> UC6
+Cliente --> UC7
 Cliente --> UC8
 Cliente --> UC9
+Cliente --> UC10
+Cliente --> UC11
+Delivery --> UC6
+Admin   --> UC12
+Admin   --> UC13
+Admin   --> UC14
 
-Delivery --> UC5
-
-' Relacionamentos entre Casos de Uso
+' Relacionamentos include e extend
 UC2 --> UC1 : <<include>>
 UC3 --> UC2 : <<include>>
 UC4 --> UC3 : <<include>>
-UC5 --> UC4 : <<include>>
-UC6 --> UC4 : <<extend>>
-UC7 --> UC6 : <<extend>>
-UC8 --> UC7 : <<extend>>
+UC5 --> UC3 : <<include>>
+UC6 --> UC4 : <<include>>
+UC6 --> UC5 : <<include>>
 
-' Casos de Uso gerenciados pelo Administrador
-rectangle "Administração" {
-  (Gerenciar Estoque e Produtos) as UC10
-  (Gerenciar Pedidos) as UC11
-  (Gerenciar Campanhas) as UC12
-}
-
-Admin --> UC10
-Admin --> UC11
-Admin --> UC12
+UC7 --> UC4 : <<extend>>
+UC8 --> UC4 : <<extend>>
+UC9 --> UC7 : <<extend>>
+UC10 --> UC9 : <<extend>>
 
 @enduml
