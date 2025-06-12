@@ -16,7 +16,8 @@ services:
     env_file:
       - ./backend/.env
     command: >
-      sh -c "python manage.py migrate &&
+      sh -c "./wait-for-it.sh db 5432 --timeout=30 --strict --
+             python manage.py migrate &&
              python manage.py collectstatic --noinput &&
              gunicorn supplifit.wsgi:application --bind 0.0.0.0:8000 --reload"
     networks:
